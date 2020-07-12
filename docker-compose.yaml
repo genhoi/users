@@ -1,0 +1,26 @@
+version: "2.4"
+services:
+  postgres:
+    build:
+      context: docker/postgres
+    mem_limit: 1G
+    ports:
+      - ${HOST_POSTGRES_PORT}:5432
+    volumes:
+      - pgsql-data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=root
+  app:
+    build:
+      context: ./
+      dockerfile: docker/users/Dockerfile
+    volumes:
+      - ./sample:/data
+    ports:
+      - ${HOST_APP_PORT}:80
+    command: serve
+
+volumes:
+  pgsql-data:
+    driver: local
