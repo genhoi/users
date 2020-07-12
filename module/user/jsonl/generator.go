@@ -1,7 +1,6 @@
 package jsonl
 
 import (
-	"bufio"
 	"encoding/json"
 	"github.com/genhoi/users/module/user"
 	"io"
@@ -11,18 +10,14 @@ func Generator(r io.Reader, chanSize int) <-chan user.GenerateUser {
 	users := make(chan user.GenerateUser, chanSize)
 
 	go func() {
-		scanner := bufio.NewScanner(r)
-		for scanner.Scan() {
+		decoder := json.NewDecoder(r)
+		for {
 			result := user.GenerateUser{}
-
-			err := scanner.Err()
-			if err != nil {
-				result.Err = err
-				users <- result
-				continue
+			err := decoder.Decode(&result.User)
+			if err == io.EOF {
+				break
 			}
-
-			result.Err = json.Unmarshal(scanner.Bytes(), &result.User)
+			result.Err = err
 			users <- result
 		}
 
