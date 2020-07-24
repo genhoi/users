@@ -43,15 +43,16 @@ func (i *Importer) Import(path ...string) error {
 				return result.Err
 			}
 			convertedChunk = append(convertedChunk, result.User)
-			query, values, err := i.query.Upsert(convertedChunk)
-			if err != nil {
-				return err
-			}
+		}
 
-			_, err = i.db.Exec(query, values...)
-			if err != nil {
-				return err
-			}
+		query, values, err := i.query.Upsert(convertedChunk)
+		if err != nil {
+			return err
+		}
+
+		_, err = i.db.Exec(query, values...)
+		if err != nil {
+			return err
 		}
 	}
 
