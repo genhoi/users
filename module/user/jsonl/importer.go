@@ -37,7 +37,7 @@ func (i *Importer) Import(path ...string) error {
 	users := Generator(mReader, chunkSize)
 	chunks := user.ChunkGenerate(users, chunkSize)
 	for chunk := range chunks {
-		var convertedChunk []interface{}
+		convertedChunk := make([]interface{}, 0, len(chunk))
 		for _, result := range chunk {
 			if result.Err != nil {
 				return result.Err

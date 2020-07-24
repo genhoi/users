@@ -117,9 +117,10 @@ func Binding(entity interface{}, start int) string {
 }
 
 func ExtractNames(entity interface{}) []string {
-	var names []string
+	fields := fields(entity)
+	names := make([]string, 0, len(fields))
 
-	for _, item := range fields(entity) {
+	for _, item := range fields {
 		names = append(names, item.tag.name)
 	}
 
@@ -137,9 +138,10 @@ func ExtractValues(entity interface{}) []interface{} {
 }
 
 func ExtractPrimaryKeys(entity interface{}) []string {
-	var names []string
+	fields := fields(entity)
+	names := make([]string, 0, len(fields))
 
-	for _, item := range fields(entity) {
+	for _, item := range fields {
 		if item.tag.primaryKey {
 			names = append(names, item.tag.name)
 		}
@@ -149,9 +151,10 @@ func ExtractPrimaryKeys(entity interface{}) []string {
 }
 
 func ExtractPrimaryKeysValues(entity interface{}) []interface{} {
-	var values []interface{}
+	fields := fields(entity)
+	values := make([]interface{}, 0, len(fields))
 
-	for _, item := range fields(entity) {
+	for _, item := range fields {
 		if item.tag.primaryKey {
 			values = append(values, item.value)
 		}

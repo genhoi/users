@@ -44,5 +44,21 @@ func TestFlat(t *testing.T) {
 			t.Errorf("expected  %v, got %v", expected, got)
 		}
 	})
+}
 
+func BenchmarkFlat(b *testing.B) {
+	v := [][]interface{}{
+		{
+			[]interface{}{1, 2},
+			[]interface{}{3, 4},
+		},
+		{
+			[]interface{}{5, 6},
+			[]interface{}{7, 8},
+		},
+	}
+
+	for i := 0; i < b.N; i++ {
+		_ = Flat(v)
+	}
 }

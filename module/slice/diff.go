@@ -5,7 +5,7 @@ func DiffStrings(a, b []string) []string {
 	for _, x := range b {
 		mb[x] = struct{}{}
 	}
-	var diff []string
+	diff := make([]string, 0, len(a))
 	for _, x := range a {
 		if _, found := mb[x]; !found {
 			diff = append(diff, x)

@@ -24,3 +24,15 @@ func TestDiffStrings(t *testing.T) {
 		}
 	})
 }
+
+func BenchmarkDiffStrings(b *testing.B) {
+	columns := []string{
+		"id", "name", "middle_name", "gender",
+	}
+	primaryColumns := []string{
+		"id",
+	}
+	for i := 0; i < b.N; i++ {
+		_ = DiffStrings(columns, primaryColumns)
+	}
+}

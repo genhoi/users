@@ -1,7 +1,7 @@
 package slice
 
 func Flat(slice [][]interface{}) []interface{} {
-	var result []interface{}
+	result := make([]interface{}, 0, len(slice))
 	for _, item := range slice {
 		result = append(result, item...)
 	}

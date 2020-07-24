@@ -108,8 +108,8 @@ func deduplicateItemsByPrimaryKeys(items []interface{}) ([]interface{}, error) {
 
 	for _, v := range items {
 		keyValues := ExtractPrimaryKeysValues(v)
+		keyValuesAsString := make([]string, 0, len(keyValues))
 
-		var keyValuesAsString []string
 		for _, keyValue := range keyValues {
 			keyValuesAsString = append(keyValuesAsString, fmt.Sprintf("%v", keyValue))
 		}
@@ -117,7 +117,7 @@ func deduplicateItemsByPrimaryKeys(items []interface{}) ([]interface{}, error) {
 		mapItemsByPrimaryKeys[key] = v
 	}
 
-	var uniqueItems []interface{}
+	uniqueItems := make([]interface{}, 0, len(mapItemsByPrimaryKeys))
 	for _, item := range mapItemsByPrimaryKeys {
 		uniqueItems = append(uniqueItems, item)
 	}

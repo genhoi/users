@@ -5,7 +5,7 @@ func Chunk(entities <-chan User, size int) <-chan []User {
 
 	i := 0
 	go func() {
-		var chunk []User
+		chunk := make([]User, 0, size)
 		for e := range entities {
 			chunk = append(chunk, e)
 			i++
@@ -14,7 +14,7 @@ func Chunk(entities <-chan User, size int) <-chan []User {
 				out <- chunk
 
 				i = 0
-				chunk = []User{}
+				chunk = make([]User, 0, size)
 			}
 		}
 
@@ -33,7 +33,7 @@ func ChunkGenerate(entities <-chan GenerateUser, size int) <-chan []GenerateUser
 
 	i := 0
 	go func() {
-		var chunk []GenerateUser
+		chunk := make([]GenerateUser, 0, size)
 		for e := range entities {
 			chunk = append(chunk, e)
 			i++
@@ -42,7 +42,7 @@ func ChunkGenerate(entities <-chan GenerateUser, size int) <-chan []GenerateUser
 				out <- chunk
 
 				i = 0
-				chunk = []GenerateUser{}
+				chunk = make([]GenerateUser, 0, size)
 			}
 		}
 
